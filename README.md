@@ -1,3 +1,8 @@
+[![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/saengate/vue)](https://github.com/saengate/vue/releases/latest)
+[![GitHub](https://img.shields.io/github/license/saengate/vue)](LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/saengate/vue)](https://github.com/saengate/vue/graphs/contributors)
+[![Build Status](https://travis-ci.org/saengate/vue.svg?branch=master)](https://travis-ci.org/saengate/vue)
+
 ## Descripción Vue CLI v4.4
 
 Frontend de la aplicación
