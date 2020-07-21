@@ -1,4 +1,4 @@
-# djfullapp-vue
+# wagtail-vue
 
 ## Project setup
 ```

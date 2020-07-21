@@ -27,12 +27,12 @@ Comandos de apoyo:
 
 ## Construir en Modo Desarrollo
 
-(Si sabes lo que estas haciendo) Puedes crear tu propia apliación vue borrando la carpeta djfullapp-vue y recreandola según tus parametros.
+(Si sabes lo que estas haciendo) Puedes crear tu propia apliación vue borrando la carpeta wagtail-vue y recreandola según tus parametros.
 
 ```sh
 docker build --no-cache -t vue ./create_vue_app
 docker run -v $(pwd):/app -p 80:80 --rm -it --name vue vue
-vue create djfullapp-vue
+vue create wagtail-vue
 ```
 
 Si la aplicación Vue ya existe y esta en la carpeta djfullapp-vue se puede levantar el contenedor con las siguientes instrucciones:
