@@ -24,7 +24,7 @@ export default {
     },
     data() {
         return {
-            message: 'Hello world in About!!',
+            message: 'Hello world in Contacto!!',
             blog: []
         };
     },

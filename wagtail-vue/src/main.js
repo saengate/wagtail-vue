@@ -4,8 +4,10 @@ import router from './router'
 import store from './store'
 import i18n from '@/plugins/i18n'
 import FlagIcon from 'vue-flag-icon'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-Vue.use(FlagIcon)
+Vue.use(FlagIcon, VueAxios, axios)
 Vue.config.productionTip = false
 
 new Vue({
