@@ -11,8 +11,8 @@ Vue.use(FlagIcon, VueAxios, axios)
 Vue.config.productionTip = false
 
 new Vue({
-  i18n,
-  router,
-  store,
-  render: h => h(App)
+    i18n,
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')
