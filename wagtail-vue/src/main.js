@@ -6,8 +6,24 @@ import i18n from '@/plugins/i18n'
 import FlagIcon from 'vue-flag-icon'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import {
+    BootstrapVue,
+    IconsPlugin,
+    BootstrapVueIcons,
 
-Vue.use(FlagIcon, VueAxios, axios)
+} from 'bootstrap-vue'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.min.css'
+
+Vue.use(
+    FlagIcon,
+    VueAxios,
+    axios,
+    BootstrapVue,
+    IconsPlugin,
+    BootstrapVueIcons,
+)
 Vue.config.productionTip = false
 
 new Vue({

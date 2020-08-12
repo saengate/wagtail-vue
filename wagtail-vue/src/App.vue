@@ -1,23 +1,27 @@
 <template>
-    <div id="app">
-        <div id="nav">
-            <router-link to="/">Home</router-link> |
-            <router-link to="/about">About</router-link> |
-            <router-link to="/contact">Contact</router-link> |
-            <router-link to="/blog">Blog</router-link>
-        </div>
-        <Header />
-        <img alt="Vue logo" src="@/assets/logo.png">
+    <b-container id="app">
+        <Header/>
+        <Menu/>
         <router-view/>
-    </div>
+        <Foot/>
+    </b-container>
 </template>
 
 <script>
 import Header from "@/components/Header.vue"
+import Menu from "@/components/Menu.vue"
+import Foot from "@/components/Foot.vue"
+import {
+    BContainer,
+} from "bootstrap-vue"
+
 export default {
     name: 'app',
     components: {
-        Header
+        Header,
+        Menu,
+        Foot,
+        'b-container': BContainer,
     },
 }
 </script>
@@ -28,19 +32,23 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color:white;
 }
 
-#nav {
-    padding: 30px;
+#body-html {
+    background-color: black;
+    background-image: url('../src/assets/images/cieloestrellado.jpeg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
-#nav a {
-    font-weight: bold;
-    color: #2c3e50;
+html {
+    height: 100%;
 }
 
-#nav a.router-link-exact-active {
-    color: #42b983;
+.ctext {
+    background-color: black;
+    display: inline-block;
+    padding-inline: 1%;
 }
 </style>

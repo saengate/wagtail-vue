@@ -1,22 +1,18 @@
 <template>
-    <div class="home">
-        <HelloWorld :msg="message"/>
+    <div>
+        <img alt="SaenGate logo" src="@/assets/logo.png">
+        <Welcome/>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Welcome from '@/components/Welcome.vue'
 
 export default {
     name: 'Home',
     components: {
-        HelloWorld
-    },
-    computed: {
-        message: function() {
-            return this.$t('hello');
-        }
+        Welcome,
     }
 }
 </script>

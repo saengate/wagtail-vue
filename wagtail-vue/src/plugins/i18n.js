@@ -6,12 +6,14 @@ Vue.use(VueI18n);
 
 const messages = {
     'en': {
-        hello: 'Welcome to Your Vue.js App',
-        head: 'Welcome to my website!'
-},
-'es': {
-        hello: 'Bienvenido a tu aplicación Vue.js',
-        head: '¡Bienvenido a mi sitio web!'
+        head: 'Hello stranger! Welcome to my website.',
+        hello: 'This is my Vue.js App.',
+        foot: 'Created by SaenGate.',
+    },
+    'es': {
+        head: '¡Hola extraño! Bienvenido a mi sitio web.',
+        hello: 'Esta es mi aplicación Vue.js',
+        foot: 'Creado por SaenGate.',
     }
 };
 
