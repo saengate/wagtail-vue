@@ -31,8 +31,30 @@ Comandos de apoyo:
 
 ```sh
 docker build --no-cache -t vue ./create_vue_app
-docker run -v $(pwd):/app -p 80:80 --rm -it --name vue vue
-vue create wagtail-vue
+docker run -v $(pwd):/app -p 80:80 --rm -it --name vue-nuxt vue-nuxt
+```
+Si deseas crear una app en vue
+`vue create wagtail-vue`
+
+Si deseas instalar Nuxt
+`npx create-nuxt-app vue-nuxt`
+
+```Para Nuxt
+ To get started:
+
+        cd wagtail-vue
+        npm run dev
+
+  To build & start for production:
+
+        cd wagtail-vue
+        npm run build
+        npm run start
+
+  To test:
+
+        cd wagtail-vue
+        npm run test
 ```
 
 Si la aplicación Vue ya existe y esta en la carpeta djfullapp-vue se puede levantar el contenedor con las siguientes instrucciones:
