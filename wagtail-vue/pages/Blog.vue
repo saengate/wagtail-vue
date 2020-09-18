@@ -21,7 +21,7 @@ export default {
     async created() {
         try {
             const res = await this.$axios.get(
-                `/pages/?type=blog.BlogsPage&fields=id,intro,body,created_at`
+                `/api/v2/pages/?type=blog.BlogsPage&fields=id,intro,body,created_at`
             );
             this.blog = res.data.items;
         } catch (error) {

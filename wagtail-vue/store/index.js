@@ -34,7 +34,7 @@ export default new Vuex.Store({
         },
     },
     getters: {
-        // variables monitoreadas
+        // variables monitoreadas, contadores tal vez
         // variableGlobal: state => !!state.token
     },
     modules: {
@@ -46,6 +46,7 @@ export default new Vuex.Store({
 
 
 // ESTA PARTE DEFINE EL FLUJO EN NUXT
+
 
 export const state = () => {
 

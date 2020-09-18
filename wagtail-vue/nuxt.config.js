@@ -58,11 +58,11 @@ export default {
      ** https://nuxtjs.org/guide/plugins
      */
     plugins: [
-        // '~/plugins/i18n.js'
+        // '~/plugins/wagtailFormat',
         {
             src: '~/plugins/globals',
             mode: 'client'
-        }
+        },
     ],
     /*
      ** Auto import components
@@ -102,10 +102,10 @@ export default {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: 'http://0.0.0.0:7000/api/v2',
+        baseURL: 'http://0.0.0.0:7000',
         retry: {
             retries: 3
-        }
+        },
     },
     publicRuntimeConfig: {
         axios: {

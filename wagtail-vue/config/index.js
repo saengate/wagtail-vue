@@ -1,4 +1,4 @@
-import en from '../lang/en-US.js'
+import us from '../lang/en-US.js'
 import es from '../lang/es-CL.js'
 
 export const I18N = {
@@ -12,7 +12,7 @@ export const I18N = {
         },
         {
             name: 'English',
-            code: 'en',
+            code: 'us',
             iso: 'en-US',
             file: 'en-US.js',
         },
@@ -27,7 +27,7 @@ export const I18N = {
     vueI18n: {
         fallbackLocale: 'es',
         messages: {
-            en,
+            us,
             es
         }
     }

@@ -30,7 +30,7 @@ export default {
     async created() {
         try {
             const res = await this.$axios.get(
-                `/pages/?type=blog.PerfilPage&fields=description,photo`
+                `/api/v2/pages/?type=blog.PerfilPage&fields=description,photo`
             );
             this.perfil = res.data.items;
         } catch (error) {
