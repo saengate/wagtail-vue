@@ -1,17 +1,17 @@
 # etapa de compilación
 FROM node:13.10.1-alpine3.10 as base-develop
-WORKDIR /app
+
+RUN mkdir -p /app/vue
+WORKDIR /app/vue
+
+COPY ./package*.json ./
+RUN npm install --silent
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
-
-COPY ./wagtail-vue/package*.json ./
-RUN npm install --silent
 RUN npm audit fix
 
-COPY ./wagtail-vue/ /app/vue
-WORKDIR /app/vue
-
+COPY . /app/vue
 RUN npm run build
 
 

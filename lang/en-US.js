@@ -3,8 +3,11 @@ export default {
     hello: 'This is my Vue.js App.',
     foot: 'Created by <strong>SaenGate</strong>.',
     build: 'Page under construction!',
+    send: "Send",
     pages: {
         home: 'Home',
-        contact: 'Contact'
+        game: 'Game',
+        contact: 'Contact',
+        blog: 'Blog',
     }
 }

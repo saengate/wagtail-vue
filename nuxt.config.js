@@ -1,5 +1,5 @@
 import {
-    I18N
+    I18N,
 } from './config'
 
 export default {
@@ -102,19 +102,19 @@ export default {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: 'http://0.0.0.0:7000',
+        baseURL: '0.0.0.0:7000',
         retry: {
             retries: 3
         },
     },
     publicRuntimeConfig: {
         axios: {
-            browserBaseURL: process.env.BROWSER_BASE_URL
+            browserBaseURL: process.env.BASE_URL || 'https://saengate.com',
         }
     },
     privateRuntimeConfig: {
         axios: {
-            baseURL: process.env.BASE_URL
+            baseURL: process.env.BASE_URL  || 'https://saengate.com',
         }
     },
     /*

@@ -37,7 +37,10 @@
                                 <b-form-invalid-feedback :state="validation">{{ message }}</b-form-invalid-feedback>
                                 <b-form-valid-feedback :state="validation">{{ message }}</b-form-valid-feedback>
                             </b-form-group>
-                            <b-button class="btn-sm btn-block btn-success" type="submit">Enviar</b-button>
+                            <b-button
+                                class="btn-sm btn-block btn-success"
+                                type="submit"
+                            >{{ $t("send") }}</b-button>
                         </b-form>
                     </b-card-body>
                 </b-card>

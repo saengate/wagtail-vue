@@ -7,10 +7,10 @@
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
-                    <b-nav-item to="/">Home</b-nav-item>
-                    <b-nav-item to="/game">Game</b-nav-item>
-                    <b-nav-item to="/contact">Contact</b-nav-item>
-                    <b-nav-item to="/blog">Blog</b-nav-item>
+                    <b-nav-item to="/">{{ $t("pages.home") }}</b-nav-item>
+                    <b-nav-item to="/game">{{ $t("pages.game") }}</b-nav-item>
+                    <b-nav-item to="/contact">{{ $t("pages.contact") }}</b-nav-item>
+                    <b-nav-item to="/blog">{{ $t("pages.blog") }}</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
         </b-navbar>

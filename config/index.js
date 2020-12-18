@@ -2,6 +2,7 @@ import us from '../lang/en-US.js'
 import es from '../lang/es-CL.js'
 
 export const I18N = {
+    parsePages: false,
     lazy: true,
     strategy: 'no_prefix',
     locales: [{
