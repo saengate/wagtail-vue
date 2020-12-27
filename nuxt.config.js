@@ -102,20 +102,10 @@ export default {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: '0.0.0.0:7000',
+        baseURL: process.env.BASE_URL || 'https://saengate.com',
         retry: {
             retries: 3
         },
-    },
-    publicRuntimeConfig: {
-        axios: {
-            browserBaseURL: process.env.BASE_URL || 'https://saengate.com',
-        }
-    },
-    privateRuntimeConfig: {
-        axios: {
-            baseURL: process.env.BASE_URL  || 'https://saengate.com',
-        }
     },
     /*
      ** Build configuration

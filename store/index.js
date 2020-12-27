@@ -47,6 +47,13 @@ export default new Vuex.Store({
 
 // ESTA PARTE DEFINE EL FLUJO EN NUXT
 
+/* acceder a otro state desde un store, usa rooState
+const getters = {
+    getApi: (state, getters, rootState) => {
+    // Access the state token from index.js
+    rootState.token
+}} */
+
 
 export const state = () => {
 

@@ -2,10 +2,10 @@
     <b-container>
         <b-row no-gutters>
             <b-col md="6">
-                <b-card no-body style="max-width: 40rem;" class="mb-2">
+                <b-card no-body style="max-width: 40rem" class="mb-2">
                     <b-card-header v-html="contact.intro"></b-card-header>
                     <b-card-body>
-                        <b-form @submit.prevent="enviarMensaje(contactSG)">
+                        <b-form @submit.prevent="callEnviarMensaje">
                             <b-form-group
                                 v-for="field in contact.form_fields"
                                 :key="field.id"
@@ -21,12 +21,15 @@
                                     :id="`id_${field.tag}`"
                                     :name="field.tag"
                                     v-model="contactSG[`${field.tag}`]"
-                                    :type="field.field_type|html"
+                                    :type="field.field_type | html"
                                     :placeholder="field.help_text"
                                     :required="field.required"
                                 ></b-form-input>
                                 <b-form-textarea
-                                    v-if="field.field_type === 'multiline' && field.form === false"
+                                    v-if="
+                                        field.field_type === 'multiline' &&
+                                        field.form === false
+                                    "
                                     :id="`id_${field.tag}`"
                                     :name="field.tag"
                                     v-model="contactSG[`${field.tag}`]"
@@ -34,19 +37,28 @@
                                     rows="3"
                                     max-rows="6"
                                 ></b-form-textarea>
-                                <b-form-invalid-feedback :state="validation">{{ message }}</b-form-invalid-feedback>
-                                <b-form-valid-feedback :state="validation">{{ message }}</b-form-valid-feedback>
+                                <b-form-invalid-feedback :state="validation">{{
+                                    message
+                                }}</b-form-invalid-feedback>
+                                <b-form-valid-feedback :state="validation">{{
+                                    message
+                                }}</b-form-valid-feedback>
                             </b-form-group>
                             <b-button
                                 class="btn-sm btn-block btn-success"
                                 type="submit"
-                            >{{ $t("send") }}</b-button>
+                                >{{ $t("send") }}</b-button
+                            >
                         </b-form>
                     </b-card-body>
                 </b-card>
             </b-col>
             <b-col md="6">
-                <b-card-img src="https://placekitten.com/290/280" alt="Image" class="rounded-0"></b-card-img>
+                <b-card-img
+                    src="https://placekitten.com/290/280"
+                    alt="Image"
+                    class="rounded-0"
+                ></b-card-img>
             </b-col>
         </b-row>
     </b-container>
@@ -68,14 +80,14 @@ export default {
                 nombre: "",
                 apellido: "",
                 asunto: "",
-                "correo-electronico": "",
+                correo_electronico: "",
                 mensaje: "",
             },
             form_type: {
                 Nombre: "nombre",
                 Apellido: "apellido",
                 Asunto: "asunto",
-                "Correo electrónico": "correo-electronico",
+                "Correo electrónico": "correo_electronico",
                 Mensaje: "mensaje",
             },
         };
@@ -87,35 +99,37 @@ export default {
     },
     methods: {
         ...mapActions("contact", ["getToken", "enviarMensaje"]),
+        callEnviarMensaje() {
+            this.enviarMensaje(this.contactSG);
+        },
     },
     async created() {
         // this.requestState;
-        console.log(this.requestState);
         this.getToken();
-        try {
-            const res = await this.$axios.get(
+        this.$axios
+            .get(
                 `/api/v2/pages/?type=blog.ContactPage&fields=intro,thank_you,form_fields`
-            );
-            this.contact = res.data.items[0];
-            this.contact.form_fields.forEach((element, index) => {
-                element.required =
-                    element.required === true ? element.required : false;
-                element["form"] = true;
-                element["tag"] = this.form_type[element.label];
-                if (wagtailFormat.type[element.field_type] === "tag") {
-                    element["form"] = false;
-                    element["form_type"] = element.field_type;
-                }
+            )
+            .then((res) => {
+                this.contact = res.data.items[0];
+                this.contact.form_fields.forEach((element, index) => {
+                    element.required =
+                        element.required === true ? element.required : false;
+                    element["form"] = true;
+                    element["tag"] = this.form_type[element.label];
+                    if (wagtailFormat.type[element.field_type] === "tag") {
+                        element["form"] = false;
+                        element["form_type"] = element.field_type;
+                    }
+                });
+            })
+            .catch((err) => {
+                console.log(err);
             });
-        } catch (error) {
-            console.log(error);
-        } finally {
-            console.log("");
-        }
     },
     computed: {
         ...mapState("contact", ["token"]),
-        ...mapGetters("contact", ["requestState"]),
+        // ...mapGetters("contact", ["requestState"]),
         validation() {
             return (
                 this.contactSG.nombre.length > 4 &&

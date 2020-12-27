@@ -2,7 +2,10 @@
     <b-container>
         <b-card>
             <b-card-header>
-                <b-img :src="require('~/assets/images/logo.png')" alt="SaenGate logo"></b-img>
+                <b-img
+                    :src="require('~/assets/images/logo.png')"
+                    alt="SaenGate logo"
+                ></b-img>
             </b-card-header>
             <b-card-body>
                 <b-card v-for="item in perfil" :key="item.id">
@@ -11,7 +14,9 @@
                         v-if="item.photo !== null"
                         width="360"
                         height="188"
-                        :src="'http://localhost:7000' + item.photo.meta.download_url"
+                        :src="
+                            'http://0.0.0.0:7000' + item.photo.meta.download_url
+                        "
                     ></b-card-img>
                 </b-card>
             </b-card-body>

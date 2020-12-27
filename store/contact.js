@@ -7,10 +7,10 @@ export const state = () => ({
 })
 
 export const mutations = {
-    setToken(state, payload) {
-        state.token = payload.token;
+    setToken(state, token) {
+        state.token = token;
     },
-    enviarMensaje(state, payload) {
+    setMensaje(state, payload) {
         state.tareas.push(payload);
     }
 }
@@ -25,18 +25,19 @@ export const actions = {
         };
         try {
             const res = await this.$axios.post("/api-token-auth/", params);
-            commit('setToken', {
-                "token": res.data.token
-            })
+            commit('setToken', res.data.token)
         } catch (error) {
             console.log(error);
         }
     },
     async enviarMensaje({
-        commit,
-        dispatch
+        state,
     }, payload) {
         try {
+            console.log("-----------------------");
+            console.log(state.token);
+            console.log(qs.stringify(payload));
+            console.log("-----------------------");
             const res = await this.$axios
                 .post("/contacto/", qs.stringify(payload), {
                     headers: {
@@ -46,9 +47,11 @@ export const actions = {
                 })
                 .then((res) => {
                     // this.guardarUsuario(token);
+                    console.log("Mensaje enviado!!!");
                     console.log(res);
                 })
                 .catch((error) => {
+                    console.log("error!!!");
                     console.log(error.response.data.mensaje);
                     // this.message = err.response.data.mensaje;
                 });
