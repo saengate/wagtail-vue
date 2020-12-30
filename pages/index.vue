@@ -7,16 +7,14 @@
                     alt="SaenGate logo"
                 ></b-img>
             </b-card-header>
-            <b-card-body>
+            <b-card-body v-if="perfil">
                 <b-card v-for="item in perfil" :key="item.id">
                     <b-card-text v-html="item.description"></b-card-text>
                     <b-card-img
                         v-if="item.photo !== null"
                         width="360"
                         height="188"
-                        :src="
-                            'http://0.0.0.0:7000' + item.photo.meta.download_url
-                        "
+                        :src="imageEndpoint + item.photo.meta.download_url"
                     ></b-card-img>
                 </b-card>
             </b-card-body>
@@ -30,6 +28,7 @@ export default {
     data() {
         return {
             perfil: [],
+            imageEndpoint: this.$axios.BASE_URL,
         };
     },
     async created() {
@@ -37,7 +36,10 @@ export default {
             const res = await this.$axios.get(
                 `/api/v2/pages/?type=blog.PerfilPage&fields=description,photo`
             );
-            this.perfil = res.data.items;
+            let data = res.data.items;
+            if (typeof data !== "undefined" && data) {
+                this.perfil = data;
+            }
         } catch (error) {
             console.log(error);
         }

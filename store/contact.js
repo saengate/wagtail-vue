@@ -34,10 +34,6 @@ export const actions = {
         state,
     }, payload) {
         try {
-            console.log("-----------------------");
-            console.log(state.token);
-            console.log(qs.stringify(payload));
-            console.log("-----------------------");
             const res = await this.$axios
                 .post("/contacto/", qs.stringify(payload), {
                     headers: {

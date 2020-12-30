@@ -83,10 +83,12 @@ Para crear los contenedores se siguieron las intrucciones de post de [Michael He
 ## Deploy
 
 https://nuxtjs.org/faq/deployment-aws-s3-cloudfront
+Remover process.env.BASE_URL del archivo nuxt.config.js para el pase a producción
 
 * `mdc exec vue sh`
 * run `nuxt generate` and `gulp deploy`
 * `sh deploy.sh`
+* o `nuxt generate && gulp deploy && sh deploy.sh`
 view `d2b7fyqrjl02ut.cloudfront.net`
 
 connect ECONNREFUSED 0.0.0.0:7000

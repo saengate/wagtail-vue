@@ -100,11 +100,22 @@ export default {
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
+     * Remover process.env.BASE_URL para el pase a producción
      */
     axios: {
-        baseURL: process.env.BASE_URL || 'https://saengate.com',
+        baseURL: process.env.BASE_URL || 'https://w3pu9fr8oe.execute-api.us-east-1.amazonaws.com/production',
         retry: {
             retries: 3
+        },
+        publicRuntimeConfig: {
+            axios: {
+                browserBaseURL: process.env.BASE_URL || 'https://w3pu9fr8oe.execute-api.us-east-1.amazonaws.com/production'
+            }
+        },
+        privateRuntimeConfig: {
+            axios: {
+                baseURL: process.env.BASE_URL || 'https://w3pu9fr8oe.execute-api.us-east-1.amazonaws.com/production'
+            }
         },
     },
     /*
