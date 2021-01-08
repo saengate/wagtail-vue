@@ -11,9 +11,9 @@ RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTO
 RUN sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
 
 # INIT AWS config credentials
-ARG AWS_ACCESS=$AWS_ACCESS
-ARG AWS_SECRET=$AWS_SECRET
-ARG AWS_REGION=$AWS_REGION
+ARG AWS_ACCESS
+ARG AWS_SECRET
+ARG AWS_REGION
 
 RUN mkdir -p /root/.aws
 
