@@ -1,7 +1,5 @@
 # etapa de compilación
-FROM node:13.10.1-stretch
-WORKDIR /app
-RUN mkdir -p vue
+FROM node:14-stretch
 
 RUN apt-get update -y
 RUN apt-get install -y git nano
@@ -11,16 +9,6 @@ RUN apt-get install -y  zsh curl
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 RUN sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' ~/.zshrc
-COPY zshrc ~/.zshrc
-
-WORKDIR /app/vue
-COPY ./package*.json ./
-# RUN npm install @vue/cli -g
-# RUN npm i -g create-nuxt-app gulp
-RUN npm install
-ENV PATH /app/vue/node_modules/.bin:$PATH
-
-COPY . .
 
 # INIT AWS config credentials
 ARG AWS_ACCESS=$AWS_ACCESS
@@ -40,8 +28,18 @@ RUN echo "output=json" >> /root/.aws/config
 RUN chmod 600 /root/.aws/*
 # END AWS config credentials
 
+RUN mkdir -p /app/vue
+WORKDIR /app/vue
+COPY ./package*.json ./
+# RUN npm install @vue/cli -g
+# RUN npm i -g create-nuxt-app gulp
+RUN npm install
+ENV PATH /app/vue/node_modules/.bin:$PATH
+
+COPY . .
+
 RUN chmod +x /app/vue/deploy.sh
-# RUN npm run test
+# RUN npm run test:unit
 
 EXPOSE 80
 CMD [ \
