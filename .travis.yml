@@ -7,14 +7,14 @@ services:
 
 env:
   global:
-  - "DOCKER_COMPOSE_VERSION=1.23.2"
+    - "DOCKER_COMPOSE_VERSION=1.23.2"
 
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y openssl
 
 before_script:
-  - docker build --no-cache --target base-test -t vue .
+  - docker build --no-cache -t vue .
 
 # Si este script falla puede deberse a que se cambio la raiz o el nombre del proyecto en el dockerfile
 script:
