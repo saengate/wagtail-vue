@@ -7,18 +7,25 @@ services:
 
 env:
   global:
-  - "DOCKER_COMPOSE_VERSION=1.23.2"
+    - "DOCKER_COMPOSE_VERSION=1.23.2"
 
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y openssl
 
 before_script:
-  - docker build --no-cache --target base-test -t vue .
+  - docker build
+    --build-arg AWS_SECRET=${AWS_SECRET_NUXT}
+    --build-arg AWS_ACCESS=${AWS_ACCESS_NUXT}
+    --build-arg AWS_REGION=${AWS_REGION}
+    --no-cache -t vue .
 
 # Si este script falla puede deberse a que se cambio la raiz o el nombre del proyecto en el dockerfile
 script:
-  - docker run --rm -it --name vue vue npm run test:unit;
+  - docker run
+    -e AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+    -e AWS_CLOUDFRONT=${AWS_CLOUDFRONT}
+    -it --name vue vue npm run test:unit;
 
 after_script:
   - docker container stop vue

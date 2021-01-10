@@ -31,8 +31,27 @@ Comandos de apoyo:
 
 ```sh
 docker build --no-cache -t vue ./create_vue_app
-docker run -v $(pwd):/app -p 80:80 --rm -it --name vue vue
-vue create wagtail-vue
+docker run -v $(pwd):/app -p 80:80 --rm -it --name vue-nuxt vue-nuxt
+```
+Si deseas crear una app en vue
+`vue create name-app`
+
+Si deseas instalar Nuxt
+`npx create-nuxt-app vue-nuxt`
+
+```Para Nuxt
+ To get started:
+
+        npm run dev
+
+  To build & start for production:
+
+        npm run build
+        npm run start
+
+  To test:
+
+        npm run test
 ```
 
 Si la aplicación Vue ya existe y esta en la carpeta djfullapp-vue se puede levantar el contenedor con las siguientes instrucciones:
@@ -59,3 +78,42 @@ nmap 0.0.0.0 -p 80 | grep -i tcp
 ### Referencia
 
 Para crear los contenedores se siguieron las intrucciones de post de [Michael Herman](https://mherman.org/blog/dockerizing-a-vue-app/)
+
+
+## Deploy
+
+https://nuxtjs.org/faq/deployment-aws-s3-cloudfront
+Remover process.env.BASE_URL del archivo nuxt.config.js para el pase a producción
+
+* `mdc exec vue sh`
+* run `nuxt generate` and `gulp deploy`
+* `sh deploy.sh`
+* o `nuxt generate && gulp deploy && sh deploy.sh`
+view `d2b7fyqrjl02ut.cloudfront.net`
+
+connect ECONNREFUSED 0.0.0.0:7000
+
+## Build Setup
+
+```bash
+# install dependencies
+$ npm install
+
+# serve with hot reload at localhost:80
+$ npm run serve
+
+# build for production and launch server
+$ npm run build
+$ npm run start
+
+# generate static project
+$ npm run generate
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

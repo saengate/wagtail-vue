@@ -9,5 +9,6 @@ RUN apt-get install -y nodejs
 
 WORKDIR /app
 RUN npm install -g @vue/cli
+RUN npm i -g create-nuxt-app
 
 ENTRYPOINT ["/bin/bash"]
