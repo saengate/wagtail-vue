@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import Vuelidate from 'vuelidate'
 import FlagIcon from 'vue-flag-icon'
 import {
     BootstrapVue,
@@ -16,6 +15,5 @@ Vue.use(
     BootstrapVue,
     IconsPlugin,
     BootstrapVueIcons,
-    Vuelidate,
 )
 Vue.config.productionTip = false

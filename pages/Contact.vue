@@ -3,53 +3,59 @@
         <b-row no-gutters>
             <b-col md="6">
                 <b-card no-body style="max-width: 40rem" class="mb-2">
-                    <b-card-header v-html="contact.intro"></b-card-header>
+                    <b-card-header v-html="contactFields.intro"></b-card-header>
                     <b-card-body>
-                        <b-form @submit.prevent="callEnviarMensaje">
-                            <b-form-group
-                                v-for="field in contact.form_fields"
-                                :key="field.id"
-                                :id="`group-${field.id}`"
-                                :label="field.label"
-                                :label-for="`id_${field.tag}`"
-                                label-cols-sm="5"
-                                label-cols-lg="4"
-                                :state="validation"
+                        <validation-observer
+                            ref="observer"
+                            v-slot="{ handleSubmit }"
+                        >
+                            <b-form
+                                @submit.stop.prevent="
+                                    handleSubmit(callEnviarMensaje)
+                                "
                             >
-                                <b-form-input
-                                    v-if="field.form === true"
-                                    :id="`id_${field.tag}`"
-                                    :name="field.tag"
-                                    v-model="contactSG[`${field.tag}`]"
-                                    :type="field.field_type | html"
-                                    :placeholder="field.help_text"
-                                    :required="field.required"
-                                ></b-form-input>
-                                <b-form-textarea
-                                    v-if="
-                                        field.field_type === 'multiline' &&
-                                        field.form === false
-                                    "
-                                    :id="`id_${field.tag}`"
-                                    :name="field.tag"
-                                    v-model="contactSG[`${field.tag}`]"
-                                    :placeholder="field.help_text"
-                                    rows="3"
-                                    max-rows="6"
-                                ></b-form-textarea>
-                                <b-form-invalid-feedback :state="validation">{{
-                                    message
-                                }}</b-form-invalid-feedback>
-                                <b-form-valid-feedback :state="validation">{{
-                                    message
-                                }}</b-form-valid-feedback>
-                            </b-form-group>
-                            <b-button
-                                class="btn-sm btn-block btn-success"
-                                type="submit"
-                                >{{ $t("send") }}</b-button
-                            >
-                        </b-form>
+                                <TextField
+                                    v-if="contactFields.form_fields[0]"
+                                    :fieldData="contactFields.form_fields[0]"
+                                    rules="required|min:4|max:20"
+                                    class="text-left"
+                                />
+                                <TextField
+                                    v-if="contactFields.form_fields[1]"
+                                    :fieldData="contactFields.form_fields[1]"
+                                    rules="required|min:4|max:20"
+                                    class="text-left"
+                                />
+                                <TextField
+                                    v-if="contactFields.form_fields[2]"
+                                    :fieldData="contactFields.form_fields[2]"
+                                    rules="required|min:20|max:150"
+                                    class="text-left"
+                                />
+                                <TextField
+                                    v-if="contactFields.form_fields[3]"
+                                    :fieldData="contactFields.form_fields[3]"
+                                    rules="required|email|max:250"
+                                    class="text-left"
+                                />
+                                <TextTareaField
+                                    v-if="contactFields.form_fields[4]"
+                                    :fieldData="contactFields.form_fields[4]"
+                                    rules="required|min:50|max:1000"
+                                    class="text-left"
+                                    :fieldClass="{
+                                        rows: '6',
+                                        'max-rows': '6',
+                                    }"
+                                />
+                                <b-button
+                                    class="btn-sm btn-block btn-success"
+                                    type="submit"
+                                >
+                                    {{ $t("send") }}
+                                </b-button>
+                            </b-form>
+                        </validation-observer>
                     </b-card-body>
                 </b-card>
             </b-col>
@@ -66,15 +72,20 @@
 
 <script>
 import wagtailFormat from "~/plugins/wagtailFormat";
-import { required, minLength, between } from "vuelidate/lib/validators";
 import { mapState, mapGetters, mapActions } from "vuex";
+import { ValidationObserver } from "vee-validate";
+import TextField from "@/components/inputs/TextField";
+import TextTareaField from "@/components/inputs/TextTareaField";
 
 export default {
     name: "Contact",
-    components: {},
+    components: {
+        ValidationObserver,
+        TextField,
+        TextTareaField,
+    },
     data() {
         return {
-            contact: {},
             message: "",
             contactSG: {
                 nombre: "",
@@ -82,13 +93,6 @@ export default {
                 asunto: "",
                 correo_electronico: "",
                 mensaje: "",
-            },
-            form_type: {
-                Nombre: "nombre",
-                Apellido: "apellido",
-                Asunto: "asunto",
-                "Correo electrónico": "correo_electronico",
-                Mensaje: "mensaje",
             },
         };
     },
@@ -98,44 +102,24 @@ export default {
         },
     },
     methods: {
-        ...mapActions("contact", ["getToken", "enviarMensaje"]),
+        ...mapActions("contact", [
+            "getToken",
+            "enviarMensaje",
+            "getFieldsContact",
+        ]),
+        getValidationState({ dirty, validated, valid = null }) {
+            return dirty || validated ? valid : null;
+        },
         callEnviarMensaje() {
             this.enviarMensaje(this.contactSG);
         },
     },
-    async created() {
-        // this.requestState;
+    created() {
         this.getToken();
-        this.$axios
-            .get(
-                `/api/v2/pages/?type=blog.ContactPage&fields=intro,thank_you,form_fields`
-            )
-            .then((res) => {
-                this.contact = res.data.items[0];
-                this.contact.form_fields.forEach((element, index) => {
-                    element.required =
-                        element.required === true ? element.required : false;
-                    element["form"] = true;
-                    element["tag"] = this.form_type[element.label];
-                    if (wagtailFormat.type[element.field_type] === "tag") {
-                        element["form"] = false;
-                        element["form_type"] = element.field_type;
-                    }
-                });
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        this.getFieldsContact();
     },
     computed: {
-        ...mapState("contact", ["token"]),
-        // ...mapGetters("contact", ["requestState"]),
-        validation() {
-            return (
-                this.contactSG.nombre.length > 4 &&
-                this.contactSG.nombre.length < 13
-            );
-        },
+        ...mapState("contact", ["token", "contactFields"]),
     },
 };
 </script>

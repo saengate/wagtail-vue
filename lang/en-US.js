@@ -1,3 +1,5 @@
+import validationMessages from 'vee-validate/dist/locale/es'
+
 export default {
     head: 'Hello stranger! Welcome to my website.',
     hello: 'This is my Vue.js App.',
@@ -9,5 +11,14 @@ export default {
         game: 'Game',
         contact: 'Contact',
         blog: 'Blog',
-    }
+    },
+    form: {
+        validation: {
+            messages: {
+                ...validationMessages.messages,
+                required: 'The field is required',
+                confirmed: 'The passwords it does not match'
+            },
+        },
+    },
 }
