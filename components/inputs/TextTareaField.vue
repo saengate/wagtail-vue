@@ -35,6 +35,7 @@
 <script>
 import wagtailFormat from "~/plugins/wagtailFormat";
 import { ValidationProvider } from "vee-validate";
+import { mapState, mapMutations } from "vuex";
 
 export default {
     name: "Contact",

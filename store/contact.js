@@ -3,8 +3,8 @@ import wagtailFormat from "~/plugins/wagtailFormat";
 
 
 export const state = () => ({
-    token: "",
     waiting: false,
+    isSending: false,
     contactFields: {
         "id": "",
         "meta": "",
@@ -23,32 +23,21 @@ export const state = () => ({
 })
 
 export const mutations = {
-    setToken(state, token) {
-        state.token = token;
-    },
-    setMensaje(state, payload) {
+    setMensaje: (state, payload) => {
         state.tareas.push(payload);
     },
-    setContactFields(state, payload) {
+    setContactFields: (state, payload) => {
         state.contactFields = payload;
+    },
+    changeWaiting: (state, waiting) => {
+        state.waiting = waiting;
+    },
+    setModal: (state, payload) => {
+        state.isSending = payload;
     },
 }
 
 export const actions = {
-    async getToken({
-        commit
-    }) {
-        let params = {
-            username: "contact",
-            password: "contact",
-        };
-        try {
-            let res = await this.$axios.post("/api-token-auth/", params);
-            commit('setToken', res.data.token)
-        } catch (error) {
-            console.log(error);
-        }
-    },
     async getFieldsContact({
         state,
         commit,
@@ -70,30 +59,30 @@ export const actions = {
                 commit('setContactFields', res);
                 return res;
             }).catch((err) => {
-                console.log("error!!!");
                 console.log(err);
             })
     },
     async enviarMensaje({
         state,
+        commit,
     }, payload) {
         try {
+            commit('changeWaiting', 'disabled');
+            console.log(payload);
             await this.$axios
                 .post("/contacto/", qs.stringify(payload), {
                     headers: {
-                        Authorization: "Token " + state.token,
                         "Content-Type": "application/x-www-form-urlencoded",
                     },
                 })
                 .then((res) => {
-                    // this.guardarUsuario(token);
+                    commit('changeWaiting', false);
+                    commit('setModal', true);
                     console.log("Mensaje enviado!!!");
                     console.log(res);
                 })
                 .catch((error) => {
-                    console.log("error!!!");
                     console.log(error.response.data.mensaje);
-                    // this.message = err.response.data.mensaje;
                 });
         } catch (error) {
             console.log(error);

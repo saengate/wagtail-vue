@@ -19,24 +19,44 @@
                                     :fieldData="contactFields.form_fields[0]"
                                     rules="required|min:4|max:20"
                                     class="text-left"
+                                    v-model="
+                                        contactSG[
+                                            `${contactFields.form_fields[0].tag}`
+                                        ]
+                                    "
                                 />
                                 <TextField
                                     v-if="contactFields.form_fields[1]"
                                     :fieldData="contactFields.form_fields[1]"
                                     rules="required|min:4|max:20"
                                     class="text-left"
+                                    v-model="
+                                        contactSG[
+                                            `${contactFields.form_fields[1].tag}`
+                                        ]
+                                    "
                                 />
                                 <TextField
                                     v-if="contactFields.form_fields[2]"
                                     :fieldData="contactFields.form_fields[2]"
                                     rules="required|min:20|max:150"
                                     class="text-left"
+                                    v-model="
+                                        contactSG[
+                                            `${contactFields.form_fields[2].tag}`
+                                        ]
+                                    "
                                 />
                                 <TextField
                                     v-if="contactFields.form_fields[3]"
                                     :fieldData="contactFields.form_fields[3]"
                                     rules="required|email|max:250"
                                     class="text-left"
+                                    v-model="
+                                        contactSG[
+                                            `${contactFields.form_fields[3].tag}`
+                                        ]
+                                    "
                                 />
                                 <TextTareaField
                                     v-if="contactFields.form_fields[4]"
@@ -47,10 +67,16 @@
                                         rows: '6',
                                         'max-rows': '6',
                                     }"
+                                    v-model="
+                                        contactSG[
+                                            `${contactFields.form_fields[4].tag}`
+                                        ]
+                                    "
                                 />
                                 <b-button
                                     class="btn-sm btn-block btn-success"
                                     type="submit"
+                                    :disabled="waiting"
                                 >
                                     {{ $t("send") }}
                                 </b-button>
@@ -67,26 +93,22 @@
                 ></b-card-img>
             </b-col>
         </b-row>
+        <ModalSendEmail />
     </b-container>
 </template>
 
 <script>
 import wagtailFormat from "~/plugins/wagtailFormat";
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
 import { ValidationObserver } from "vee-validate";
 import TextField from "@/components/inputs/TextField";
 import TextTareaField from "@/components/inputs/TextTareaField";
+import ModalSendEmail from "@/components/ModalSendEmail";
 
 export default {
     name: "Contact",
-    components: {
-        ValidationObserver,
-        TextField,
-        TextTareaField,
-    },
     data() {
         return {
-            message: "",
             contactSG: {
                 nombre: "",
                 apellido: "",
@@ -96,30 +118,23 @@ export default {
             },
         };
     },
-    filters: {
-        html(value) {
-            return wagtailFormat.html(value);
-        },
+    components: {
+        ValidationObserver,
+        TextField,
+        TextTareaField,
+        ModalSendEmail,
     },
     methods: {
-        ...mapActions("contact", [
-            "getToken",
-            "enviarMensaje",
-            "getFieldsContact",
-        ]),
-        getValidationState({ dirty, validated, valid = null }) {
-            return dirty || validated ? valid : null;
-        },
+        ...mapActions("contact", ["enviarMensaje", "getFieldsContact"]),
         callEnviarMensaje() {
             this.enviarMensaje(this.contactSG);
         },
     },
     created() {
-        this.getToken();
         this.getFieldsContact();
     },
     computed: {
-        ...mapState("contact", ["token", "contactFields"]),
+        ...mapState("contact", ["waiting", "contactFields"]),
     },
 };
 </script>
