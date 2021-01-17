@@ -1,3 +1,5 @@
+import validationMessages from 'vee-validate/dist/locale/es'
+
 export default {
     head: '¡Hola extraño! Bienvenido a mi sitio web.',
     hello: 'Esta es mi aplicación Vue.js',
@@ -9,5 +11,14 @@ export default {
         game: 'Juego',
         contact: 'Contacto',
         blog: 'Blog',
-    }
+    },
+    form: {
+        validation: {
+            messages: {
+                ...validationMessages.messages,
+                required: 'El campo es obligatorio',
+                confirmed: 'Las contraseñas no coinciden'
+            },
+        },
+    },
 }
