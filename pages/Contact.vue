@@ -98,8 +98,7 @@
 </template>
 
 <script>
-import wagtailFormat from "~/plugins/wagtailFormat";
-import { mapState, mapGetters, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { ValidationObserver } from "vee-validate";
 import TextField from "@/components/inputs/TextField";
 import TextTareaField from "@/components/inputs/TextTareaField";

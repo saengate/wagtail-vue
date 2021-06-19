@@ -4,6 +4,7 @@ import wagtailFormat from "~/plugins/wagtailFormat";
 
 export const state = () => ({
     waiting: false,
+    loadingContact: false,
     isSending: false,
     contactFields: {
         "id": "",
@@ -35,6 +36,9 @@ export const mutations = {
     setModal: (state, payload) => {
         state.isSending = payload;
     },
+    setLoadingContact (state) {
+        state.loadingContact = !state.loadingContact;
+    }
 }
 
 export const actions = {
@@ -42,6 +46,7 @@ export const actions = {
         state,
         commit,
     }) {
+        commit('setLoadingContact');
         await this.$axios
             .get(`/api/v2/pages/?type=blog.ContactPage&fields=intro,thank_you,form_fields`)
             .then((res) => {
@@ -60,15 +65,15 @@ export const actions = {
                 return res;
             }).catch((err) => {
                 console.log(err);
+            }).finally(() => {
+                commit('setLoadingContact');
             })
     },
     async enviarMensaje({
-        state,
         commit,
     }, payload) {
         try {
             commit('changeWaiting', 'disabled');
-            console.log(payload);
             await this.$axios
                 .post("/contacto/", qs.stringify(payload), {
                     headers: {
@@ -78,8 +83,6 @@ export const actions = {
                 .then((res) => {
                     commit('changeWaiting', false);
                     commit('setModal', true);
-                    console.log("Mensaje enviado!!!");
-                    console.log(res);
                 })
                 .catch((error) => {
                     console.log(error.response.data.mensaje);

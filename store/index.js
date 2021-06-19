@@ -54,15 +54,22 @@ const getters = {
     rootState.token
 }} */
 
+export const state = () => ({
+    loading: false
+})
 
-export const state = () => {
-
+export const mutations = {
+    SET_LOADING (state) {
+        state.loading = !state.loading;
+    }
 }
 
-export const actions = () => {
-
+export const actions = {
+    setLoading({ commit }) {
+        commit("SET_LOADING");
+    }
 }
 
-export const getters = () => {
+export const getters = () => ({
 
-}
+})

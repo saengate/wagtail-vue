@@ -11,6 +11,8 @@
 
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     name: "Blog",
     data() {
@@ -18,14 +20,20 @@ export default {
             blog: [],
         };
     },
+    methods: {
+        ...mapActions(["setLoading"]),
+    },
     async created() {
         try {
+            this.setLoading()
             const res = await this.$axios.get(
                 `/api/v2/pages/?type=blog.BlogsPage&fields=id,intro,body,created_at`
             );
             this.blog = res.data.items;
         } catch (error) {
             console.log(error);
+        } finally {
+            this.setLoading()
         }
     },
 };

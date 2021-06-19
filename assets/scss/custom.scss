@@ -4,5 +4,9 @@ $danger: #a11309;
 // $light:         #f1f1f1 ;
 $dark: #000000;
 
+h6 {
+    color: $danger;
+}
+
 @import 'bootstrap/scss/bootstrap.scss';
 @import 'bootstrap-vue/src/index.scss';

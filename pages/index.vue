@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     name: "index",
     data() {
@@ -31,8 +33,12 @@ export default {
             imageEndpoint: this.$axios.BASE_URL,
         };
     },
+    methods: {
+        ...mapActions(["setLoading"]),
+    },
     async created() {
         try {
+            this.setLoading()
             const res = await this.$axios.get(
                 `/api/v2/pages/?type=blog.PerfilPage&fields=description,photo`
             );
@@ -42,6 +48,8 @@ export default {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            this.setLoading()
         }
     },
 };
