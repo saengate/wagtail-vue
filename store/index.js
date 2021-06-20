@@ -59,14 +59,14 @@ export const state = () => ({
 })
 
 export const mutations = {
-    SET_LOADING (state) {
-        state.loading = !state.loading;
+    SET_LOADING (state, payload) {
+        state.loading = payload;
     }
 }
 
 export const actions = {
-    setLoading({ commit }) {
-        commit("SET_LOADING");
+    setLoading({ commit }, payload) {
+        commit("SET_LOADING", payload);
     }
 }
 

@@ -11,7 +11,7 @@
             {{ locale.name }}
         </b-button>
         <h3 class="mt-3">{{ $t("head") }}</h3>
-        <div v-if="loading || loadingContact">
+        <div v-show="loading || loadingContact">
             <h6 font-color="danger" v-html='$t("backend")'></h6>
             <div class="spinner-border text-danger" role="status">
                 <span class="sr-only">Loading...</span>

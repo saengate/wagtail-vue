@@ -36,8 +36,8 @@ export const mutations = {
     setModal: (state, payload) => {
         state.isSending = payload;
     },
-    setLoadingContact (state) {
-        state.loadingContact = !state.loadingContact;
+    setLoadingContact (state, payload) {
+        state.loadingContact = payload;
     }
 }
 
@@ -46,7 +46,7 @@ export const actions = {
         state,
         commit,
     }) {
-        commit('setLoadingContact');
+        commit('setLoadingContact', true);
         await this.$axios
             .get(`/api/v2/pages/?type=blog.ContactPage&fields=intro,thank_you,form_fields`)
             .then((res) => {
@@ -66,7 +66,7 @@ export const actions = {
             }).catch((err) => {
                 console.log(err);
             }).finally(() => {
-                commit('setLoadingContact');
+                commit('setLoadingContact', false);
             })
     },
     async enviarMensaje({
