@@ -49,7 +49,7 @@
         "gulp-cloudfront-invalidate-aws-publish": "^1.0.0",
         "gulp-env": "^0.4.0",
         "jest": "^26.1.0",
-        "vue-jest": "^3.0.4"
+        "vue-jest": "^4.0.1"
     },
     "bugs": {
         "url": "https://github.com/saengate/wagtail-compose/issues"
