@@ -24,7 +24,7 @@
         "bootstrap": "^4.5.0",
         "bootstrap-vue": "^2.15.0",
         "node-sass": "^4.14.1",
-        "nuxt": "^2.14.0",
+        "nuxt": "^3.4.3",
         "nuxt-i18n": "^6.13.12",
         "qs": "^6.9.4",
         "sass-loader": "^10.0.1",
